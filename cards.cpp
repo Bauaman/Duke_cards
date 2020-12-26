@@ -8,6 +8,43 @@ void assert_card_valid(card_t c)
     assert(c.value >= 2 && c.value <= VALUE_ACE);
     assert(c.suit >= SPADES && c.suit <= CLUBS);
 }
+const char *ranking_to_string(hand_ranking_t r)
+{
+    char *hand_r;
+    switch (r)
+    {
+    case STRAIGHT_FLUSH:
+        hand_r = "straight flush";
+        break;
+    case STRAIGHT:
+        hand_r = "straight";
+        break;
+    case FOUR_OF_A_KIND:
+        hand_r = "four of a kind";
+        break;
+    case FULL_HOUSE:
+        hand_r = "full house";
+        break;
+    case FLUSH:
+        hand_r = "flush";
+        break;
+    case THREE_OF_A_KIND:
+        hand_r = "three of a kind";
+        break;
+    case TWO_PAIR:
+        hand_r = "two pairs";
+        break;
+    case PAIR:
+        hand_r = "pair";
+        break;
+    case NOTHING:
+        hand_r = "nothing";
+        break;
+    default:
+        break;
+    }
+return hand_r;
+}
 
 char value_letter(card_t c)
 {
@@ -68,7 +105,8 @@ void print_card(card_t c)
     std::cout << value_letter(c) << suit_letter(c);
 }
 
-card_t card_from_num(unsigned c){
+card_t card_from_num(unsigned c)
+{
     card_t card;
     card.value = c % 13;
     switch (c / 13)
