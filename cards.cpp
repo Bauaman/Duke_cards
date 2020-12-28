@@ -43,7 +43,7 @@ const char *ranking_to_string(hand_ranking_t r)
     default:
         break;
     }
-return hand_r;
+return hand_r; 
 }
 
 char value_letter(card_t c)
