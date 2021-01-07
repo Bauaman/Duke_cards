@@ -3,12 +3,14 @@
 #include <stdlib.h>
 #include "cards.h"
 
-
+/* Проверка карты на валидность (несуществующие карты
+останавливают выполнение программы) */
 void assert_card_valid(card_t c) {
   assert(c.value >= 2 && c.value <= VALUE_ACE);
   assert(c.suit >= SPADES && c.suit <= CLUBS); 
 }
-
+/* Возвращает название руки в строке из пронумерованного
+списка (в структуре hand_ranking_t) */
 const char * ranking_to_string(hand_ranking_t r) {
   
   switch (r)
@@ -46,6 +48,8 @@ const char * ranking_to_string(hand_ranking_t r) {
    return "";
 }
 
+/* Возвращает буквенное (char) обозначение 
+номинала карты (2..10,J,Q,K,A) */
 char value_letter(card_t c) {
   int x = 0;
   assert_card_valid(c);
@@ -80,7 +84,8 @@ char value_letter(card_t c) {
   return (char)x;
 }
 
-
+/* Возвращает буквенное (char) обозначение название масти
+карты (s,h,d,c) */
 char suit_letter(card_t c) {
   assert_card_valid(c);
   char x;
@@ -103,12 +108,13 @@ char suit_letter(card_t c) {
     }
   return x;
 }
-
+/* распечатка карты (номинал + масть) - буквы(char) */
 void print_card(card_t c) {
   // std::cout << value_letter(c) << suit_letter(c);
   printf("%c%c",value_letter(c),suit_letter(c));
 }
 
+/* заполнение структуры карты card_t из букв (char) номинала и масти */
 card_t card_from_letters(char value_let, char suit_let) {
   card_t temp;
   int i_value_let = value_let - '0';
@@ -161,14 +167,17 @@ card_t card_from_letters(char value_let, char suit_let) {
   return temp;
 }
 
+/* получение карты из колоды по номеру 1..52
+0..13  - пики 10,2,3,4,5,6,7,8,9,J,Q,K,A
+14..26 - червы 10,2,3,4,5,6,7,8,9,J,Q,K,A
+27..39 - бубны 10,2,3,4,5,6,7,8,9,J,Q,K,A
+40..52 - трефы 10,2,3,4,5,6,7,8,9,J,Q,K,A*/
 card_t card_from_num(unsigned c) {
   card_t temp;
   temp.value = c%13;
   if (temp.value >=1 && temp.value < 9) temp.value = temp.value + 1;
   else if (temp.value >= 9) temp.value = temp.value+2;
-  //else if (temp.value == 10) temp.value = VALUE_QUEEN;
-  //else if (temp.value == 12) temp.value = VALUE_KING;
-  //else if (temp.value == 13) temp.value = VALUE_ACE;
+
   switch(c/13)
     {
     case 0:
